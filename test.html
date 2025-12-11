@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GIS Image Gallery (3x3) — Click to Enlarge</title>
+  <!-- Bootstrap (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .gallery-img {
+      cursor: pointer;
+      transition: transform .18s ease-in-out;
+    }
+    .gallery-img:hover { transform: scale(1.03); }
+
+    /* Modal overlay */
+    .gallery-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* forces ALL images to same size */
+      cursor: pointer;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.75);
+      z-index: 1100;
+      padding: 1.5rem;
+    }
+    .lightbox-content {
+      max-width: 1100px;
+      width: 100%;
+      max-height: 95vh;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .lightbox-inner {
+      background: #fff;
+      border-radius: .5rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+    .lightbox-inner img {
+      max-width: 100%;
+      max-height: 80vh;
+      display: block;
+      width: auto;
+      height: auto;
+    }
+    .lightbox-caption {
+      color: #fff;
+      text-align: center;
+      font-size: .95rem;
+    }
+    .lb-close, .lb-prev, .lb-next {
+      position: absolute;
+      top: 8px;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      border: none;
+      padding: .45rem .6rem;
+      border-radius: .35rem;
+      cursor: pointer;
+      backdrop-filter: blur(2px);
+    }
+    .lb-close { right: 8px; }
+    .lb-prev { left: 8px; }
+    .lb-next { right: 56px; }
+
+    @media (max-width: 576px) {
+      .lb-next { right: 48px; }
+      .lightbox-inner img { max-height: 65vh; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="container-xxl py-5" id="gis-gallery">
+  <div class="container">
+    <div class="row mb-4 align-items-center">
+      <div class="col-lg-6">
+        <h1 class="display-6 mb-0">GIS Image Gallery</h1>
+        <small class="text-muted">Click any image to view larger. Use arrows or swipe to navigate.</small>
+      </div>
+    </div>
+
+    <style>
+      .thumb-wrapper {
+        width: 100%;
+        height: 140px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f0f0f0;
+      }
+      .thumb-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+    </style>
+
+    <!-- 6 per row layout -->
+    <div class="row gy-3 gx-3">
+      <!-- 22 images -->
+      <!-- Repeat block below for all 22 -->
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_1.png" alt="GIS image 1" data-index="0"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_2.png" alt="GIS image 2" data-index="1"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_3.png" alt="GIS image 3" data-index="2"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_4.png" alt="GIS image 4" data-index="3"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_5.png" alt="GIS image 5" data-index="4"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_6.png" alt="GIS image 6" data-index="5"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_7.png" alt="GIS image 7" data-index="6"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_8.png" alt="GIS image 8" data-index="7"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_9.png" alt="GIS image 9" data-index="8"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_10.jpg" alt="GIS image 10" data-index="9"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_11.jpg" alt="GIS image 11" data-index="10"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_12.jpg" alt="GIS image 12" data-index="11"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_13.jpg" alt="GIS image 13" data-index="12"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_14.jpg" alt="GIS image 14" data-index="13"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_15.jpg" alt="GIS image 15" data-index="14"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_16.jpg" alt="GIS image 16" data-index="15"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_17.jpg" alt="GIS image 17" data-index="16"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_18.jpg" alt="GIS image 18" data-index="17"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_19.jpg" alt="GIS image 19" data-index="18"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_20.jpg" alt="GIS image 20" data-index="19"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_21.jpg" alt="GIS image 21" data-index="20"></div></div>
+      <div class="col-lg-2 col-md-4 col-6"><div class="thumb-wrapper"><img class="gallery-img" src="images/gis/Gis_22.jpg" alt="GIS image 22" data-index="21"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox / Modal -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-content">
+    <div class="lightbox-inner">
+      <button class="lb-prev" id="lbPrev" aria-label="Previous image">❮</button>
+      <img id="lightboxImg" src="" alt="Expanded GIS image">
+      <button class="lb-next" id="lbNext" aria-label="Next image">❯</button>
+      <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    </div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  (function(){
+    const images = Array.from(document.querySelectorAll('.gallery-img'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbCaption = document.getElementById('lightboxCaption');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      const imgEl = images[index];
+      lbImg.src = imgEl.src;
+      lbImg.alt = imgEl.alt || 'Expanded image';
+      lbCaption.textContent = imgEl.dataset.caption || '';
+      lightbox.style.display = 'flex';
+      currentIndex = index;
+      document.body.style.overflow = 'hidden';
+      // focus for accessibility
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = 'none';
+      lbImg.src = '';
+      lbCaption.textContent = '';
+      document.body.style.overflow = '';
+    }
+
+    function gotoIndex(idx) {
+      if (idx < 0) idx = images.length - 1;
+      if (idx >= images.length) idx = 0;
+      openLightbox(idx);
+    }
+
+    images.forEach((img, i) => {
+      img.addEventListener('click', () => openLightbox(i));
+      // keyboard support on images
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') openLightbox(i);
+      });
+      img.tabIndex = 0;
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', () => gotoIndex(currentIndex - 1));
+    lbNext.addEventListener('click', () => gotoIndex(currentIndex + 1));
+
+    // close when clicking outside image
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.style.display !== 'flex') return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') gotoIndex(currentIndex - 1);
+      if (e.key === 'ArrowRight') gotoIndex(currentIndex + 1);
+    });
+
+    // optional: support swipe on touch devices
+    let startX = 0;
+    lbImg.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+    lbImg.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (dx > 40) gotoIndex(currentIndex - 1);
+      if (dx < -40) gotoIndex(currentIndex + 1);
+    }, {passive:true});
+
+  })();
+// Carousel Scroll Logic
+  const carousel = document.getElementById('imageCarousel');
+  document.getElementById('carouselPrev').onclick = () => carousel.scrollBy({ left: -300, behavior: 'smooth' });
+  document.getElementById('carouselNext').onclick = () => carousel.scrollBy({ left: 300, behavior: 'smooth' });
+
+</script>
+
+</body>
+</html>
