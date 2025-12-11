@@ -233,5 +233,33 @@
 
 </script>
 
+<style>
+  /* Equal-width buttons (responsive) */
+  .btn-equal {
+    min-width: 220px;     /* desktop width — change as needed */
+    width: auto;          /* lets small screens shrink when using flex utilities below */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* On very small screens, make buttons full width when stacked */
+  @media (max-width: 576px) {
+    .btn-equal {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="d-flex justify-content-center gap-4 flex-column flex-sm-row">
+  <p class="mb-0" style="width:auto;">
+    <a href="mailto:pa374@cornell.edu" target="_blank" class="btn btn-primary py-3 px-5">Hire me</a>
+  </p>
+  <p class="mb-0" style="width:auto;">
+    <a href="#contact-section" class="btn btn-primary py-3 px-5">Let's Connect</a>
+  </p>
+</div>
+
 </body>
 </html>
