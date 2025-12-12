@@ -8482,11 +8482,12 @@ h1, h2, h3, h4, h5,
         .owl-carousel.home-slider .slider-item .slider-text .one-forth {
           width: 50%;
           position: relative; }
+          /* home content */
           @media (min-width: 768px) {
             .owl-carousel.home-slider .slider-item .slider-text .one-forth {
               position: absolute;
               top: 0;
-              left: 0;
+              left: 5cm;
               bottom: 0;
               right: 0;
               width: 1200px;
@@ -8769,13 +8770,16 @@ h1, h2, h3, h4, h5,
     display: block;
     width: 100%;
     position: relative;
-    z-index: 1; }
+    z-index: -1; 
+    height: 700px;  
+		max-height: 70vh;
+    background-size: contain !important;}
 
 .ftco-about ul.about-info {
   display: inline-block;
   padding: 0;
   margin: 0;
-  width: 100%; }
+  width: 100%;  }
   .ftco-about ul.about-info li {
     list-style: none;
     margin-bottom: 10px; }

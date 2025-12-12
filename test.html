@@ -252,14 +252,176 @@
   }
 </style>
 
-<div class="d-flex justify-content-center gap-4 flex-column flex-sm-row">
-  <p class="mb-0" style="width:auto;">
-    <a href="mailto:pa374@cornell.edu" target="_blank" class="btn btn-primary py-3 px-5">Hire me</a>
-  </p>
-  <p class="mb-0" style="width:auto;">
-    <a href="#contact-section" class="btn btn-primary py-3 px-5">Let's Connect</a>
-  </p>
+<div class="col-md-6 mt-4">
+  <div class="choice-buttons">
+
+    <!-- Button 1 -->
+    <button class="expand-btn" aria-expanded="false" aria-controls="expand-1" onclick="toggleExpand(this, 'expand-1')">
+      <span class="btn-title">What Inspires My Journey into Public Health</span>
+      <span class="btn-indicator" aria-hidden="true">▾</span>
+    </button>
+    <div id="expand-1" class="expand-content" role="region" aria-hidden="true">
+      <p>I chose this program to strengthen my foundation in public health, integrate data-driven decision-making, and gain applied skills that bridge research, policy, and real-world health impact.</p>
+    </div>
+
+    <!-- Button 2 -->
+    <button class="expand-btn" aria-expanded="false" aria-controls="expand-2" onclick="toggleExpand(this, 'expand-2')">
+      <span class="btn-title">My Professional and Practical Experience in Public Health</span>
+      <span class="btn-indicator" aria-hidden="true">▾</span>
+    </button>
+    <div id="expand-2" class="expand-content" role="region" aria-hidden="true">
+      <p>During my coursework, I completed analytical projects, designed policy briefs, led research assignments, and developed tools that connect public health insights with data visualization and communication.</p>
+    </div>
+
+    <!-- Button 3 -->
+    <button class="expand-btn" aria-expanded="false" aria-controls="expand-3" onclick="toggleExpand(this, 'expand-3')">
+      <span class="btn-title">My Aspirations and Vision for the Future of Public Health</span>
+      <span class="btn-indicator" aria-hidden="true">▾</span>
+    </button>
+    <div id="expand-3" class="expand-content" role="region" aria-hidden="true">
+      <p>I aim to apply my skills to work at the intersection of health systems, environmental health, and data—supporting evidence-driven solutions that improve population health outcomes.</p>
+    </div>
+
+  </div>
 </div>
+
+<!-- Styles: add once to your stylesheet or above the block inside <style> -->
+<style>
+/* Container */
+.choice-buttons { width: 100%; }
+
+/* Big button style */
+.expand-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;              /* larger touch area */
+  margin-top: 14px;
+  background: linear-gradient(180deg,#ffcd50,#ffb81f); /* warm accent */
+  border: none;
+  border-radius: 12px;
+  color: #071217;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 6px 18px rgba(11,20,30,0.12);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  text-align: left;
+}
+
+/* title wraps nicely */
+.expand-btn .btn-title {
+  display: inline-block;
+  line-height: 1.1;
+  vertical-align: middle;
+}
+
+/* chevron indicator */
+.expand-btn .btn-indicator {
+  font-size: 20px;
+  transition: transform .25s ease, opacity .15s ease;
+  opacity: .95;
+}
+
+/* hover/focus */
+.expand-btn:hover, .expand-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(11,20,30,0.18);
+  outline: none;
+}
+
+/* open state for button */
+.expand-btn[aria-expanded="true"] {
+  background: linear-gradient(180deg,#ffd97a,#ffb81f);
+}
+
+/* Expanded content panel (hidden by default) */
+.expand-content {
+  overflow: hidden;
+  max-height: 0;
+  padding: 0 16px;
+  background: #0d1112;      /* dark panel when expanded */
+  border-radius: 0 0 12px 12px;
+  margin-top: 8px;
+  color: #cfe7f6;
+  transition: background .2s ease;
+}
+
+/* content inner padding when active applied by JS */
+.expand-content .inner {
+  padding: 14px 0;
+  line-height: 1.5;
+  color: #d6eaf3;
+}
+
+/* small screens: adjust padding & font-size */
+@media (max-width: 576px) {
+  .expand-btn { padding: 14px 12px; font-size: 14px; border-radius: 10px; }
+  .expand-content { padding: 0 12px; }
+}
+</style>
+
+<!-- JS: add once before </body> -->
+<script>
+/**
+ * toggleExpand(button, contentId)
+ * - Animates open/close using scrollHeight (no fixed max-height)
+ * - Keeps aria-expanded / aria-hidden updated
+ */
+function toggleExpand(btn, contentId) {
+  var content = document.getElementById(contentId);
+  if (!content) return;
+
+  var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+  if (isOpen) {
+    // close
+    btn.setAttribute('aria-expanded', 'false');
+    content.setAttribute('aria-hidden', 'true');
+
+    // animate to height 0
+    content.style.maxHeight = content.scrollHeight + 'px'; // start from current height
+    // force reflow to ensure transition
+    content.offsetHeight;
+    content.style.transition = 'max-height 320ms ease';
+    content.style.maxHeight = '0';
+    // remove inner padding after transition ends for tidy layout
+    content.addEventListener('transitionend', function handler(){
+      content.style.transition = '';
+      content.querySelector('.inner')?.removeAttribute('data-open');
+      content.removeEventListener('transitionend', handler);
+    });
+  } else {
+    // open
+    btn.setAttribute('aria-expanded', 'true');
+    content.setAttribute('aria-hidden', 'false');
+
+    // ensure inner wrapper exists (so padding can be toggled)
+    if (!content.querySelector('.inner')) {
+      var inner = document.createElement('div');
+      inner.className = 'inner';
+      // move existing children into inner
+      while (content.firstChild) inner.appendChild(content.firstChild);
+      content.appendChild(inner);
+    } else {
+      content.querySelector('.inner').setAttribute('data-open', 'true');
+    }
+
+    // set max-height to measured scrollHeight to animate open
+    content.style.maxHeight = content.scrollHeight + 'px';
+    content.style.transition = 'max-height 360ms ease';
+    // remove the inline max-height after animation so it can grow with responsive text
+    content.addEventListener('transitionend', function handler(){
+      content.style.transition = '';
+      content.style.maxHeight = 'none';
+      content.removeEventListener('transitionend', handler);
+    });
+  }
+}
+</script>
+<!-- END: About buttons -->
 
 </body>
 </html>
