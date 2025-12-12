@@ -8799,7 +8799,7 @@ h1, h2, h3, h4, h5,
   width: 100%;
   margin-bottom: 30px;
   background: rgba(255, 255, 255, 0.1);
-  padding: 30px;
+  padding: 20px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -9295,7 +9295,8 @@ textarea.form-control {
 
 .block-20 {
   overflow: hidden;
-  background-size: cover;
+  background-size: cover; */
+  /* background-size: contain;  */
   background-repeat: no-repeat;
   background-position: center center;
   position: relative;
